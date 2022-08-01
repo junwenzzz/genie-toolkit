@@ -272,10 +272,12 @@ with_filter : C.FilterSlot = {
     p:out_param_Any with { type = (new Type.Measure('C')) } ('hotter' | 'higher') 'than' x:constant_Measure_C => C.makeFilter($loader, p, '>=', x);
     p:out_param_Any with { type = (new Type.Measure('C')) } ('cooler' | 'colder' | 'lower') 'than' x:constant_Measure_C  => C.makeFilter($loader, p, '<=', x);
 
-    p:out_param_Any with { type = (new Type.Measure('m')) } ('farther' | 'more distant' | 'longer') 'than' x:constant_Measure_m => C.makeFilter($loader, p, '>=', x);
-    p:out_param_Any with { type = (new Type.Measure('m')) } ('nearer' | 'closer' | 'shorter') 'than' x:constant_Measure_m  => C.makeFilter($loader, p, '<=', x);
-
-    p:out_param_Any with { type = (new Type.Measure('m2')) } ('larger' | 'bigger') 'than' x:constant_Measure_m2 => C.makeFilter($loader, p, '>=', x);
+    // adapt expression for building dimension
+    p:out_param_Any with { type = (new Type.Measure('m')) } ('longer' | 'wider' | 'greater') 'than' x:constant_Measure_m => C.makeFilter($loader, p, '>=', x);
+    p:out_param_Any with { type = (new Type.Measure('m')) } ('shorter' | 'smaller') 'than' x:constant_Measure_m  => C.makeFilter($loader, p, '<=', x);
+    
+    // adapt expression for building dimension
+    p:out_param_Any with { type = (new Type.Measure('m2')) } ('larger' | 'bigger' | 'greater') 'than' x:constant_Measure_m2 => C.makeFilter($loader, p, '>=', x);
     p:out_param_Any with { type = (new Type.Measure('m2')) } 'smaller' 'than' x:constant_Measure_m2  => C.makeFilter($loader, p, '<=', x);
 
     p:out_param_Any with { type = (new Type.Measure('m3')) } ('larger' | 'bigger') 'than' x:constant_Measure_m3 => C.makeFilter($loader, p, '>=', x);
@@ -308,9 +310,10 @@ with_filter : C.FilterSlot = {
 
     ('hotter' | 'higher') p:out_param_Any with { type = (new Type.Measure('C')) } 'than' x:constant_Measure_C => C.makeFilter($loader, p, '>=', x);
     ('cooler' | 'colder' | 'lower') p:out_param_Any with { type = (new Type.Measure('C')) } 'than' x:constant_Measure_C  => C.makeFilter($loader, p, '<=', x);
-
-    ('farther' | 'more distant' | 'longer') p:out_param_Any with { type = (new Type.Measure('m')) } 'than' x:constant_Measure_m => C.makeFilter($loader, p, '>=', x);
-    ('nearer' | 'closer' | 'shorter') p:out_param_Any with { type = (new Type.Measure('m')) } 'than' x:constant_Measure_m  => C.makeFilter($loader, p, '<=', x);
+    
+    // adapt expression for building
+    ('larger' | 'bigger' | 'greater') p:out_param_Any with { type = (new Type.Measure('m')) } 'than' x:constant_Measure_m => C.makeFilter($loader, p, '>=', x);
+    ('shorter' | 'smaller') p:out_param_Any with { type = (new Type.Measure('m')) } 'than' x:constant_Measure_m  => C.makeFilter($loader, p, '<=', x);
 
     ('bigger' | 'larger' ) p:out_param_Any with { type = (new Type.Measure('m2')) } 'than' x:constant_Measure_m2 => C.makeFilter($loader, p, '>=', x);
     'smaller' p:out_param_Any with { type = (new Type.Measure('m2')) } 'than' x:constant_Measure_m2  => C.makeFilter($loader, p, '<=', x);
@@ -335,7 +338,7 @@ with_filter : C.FilterSlot = {
     // array
     p:out_param_Array__Any 'containing' x:constant_Any => C.makeFilter($loader, p, 'contains', x);
     p:out_param_Array__Any 'containing no' x:constant_Any => C.makeFilter($loader, p, 'contains', x, true);
-    x:constant_Any 'in' 'the' p:out_param_Array__Any => C.makeFilter($loader, p, 'contains', x);
+    x:constant_Any 'in' 'the' p:out_param_Array__Any => C.makeFilter($loader, p, 'contains', x);  
 
     // array contain and
     !turking p:out_param_Array__Any 'containing' both_prefix pair:constant_pairs with { type = p.elem } => C.makeAndFilter($loader, p, 'contains', pair);
@@ -383,7 +386,6 @@ with_filter : C.FilterSlot = {
         const filter = C.makeFilter($loader, f, '<=', x);
         return C.makeAggregateFilterWithFilter(p, filter, 'count', '*', '==', v);
     };
-
     ('more than' | 'at least' | 'no fewer than') x:constant_Number p:out_param_Array__Any => C.makeAggregateFilter(p, 'count', '*', '>=', x);
     ('fewer than' | 'at most' | 'no more than') x:constant_Number p:out_param_Array__Any => C.makeAggregateFilter(p, 'count', '*', '<=', x);
     ('more than' | 'at least' | 'no fewer than') x:constant_Number p:out_param_ArrayCount => C.makeFilter($loader, p, '>=', x);

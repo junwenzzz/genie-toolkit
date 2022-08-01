@@ -153,7 +153,7 @@ timer_rule : Ast.ChainExpression = {
 }
 
 generic_preamble_for_answer : string = {
-    'i am looking for';
+    // 'i am looking for'; remove this for statement
     'i would like';
     'i want';
     'i need';
@@ -217,36 +217,44 @@ generic_article : string = {
     'an';
     'the';
     'some';
-    'any';
     'all';
     'all the';
     'every';
-    'a list of';
-    'a list of all';
-    'the list of';
-    'the list of all';
+    // remove for statement
+    // 'any';
+    // 'a list of';
+    // 'a list of all';
+    // 'the list of';
+    // 'the list of all';
 }
-
+// REMOVE for statement 
+// 'get' generic_article table:with_filtered_table
+// | generic_verb_for_search generic_article table:with_filtered_table
+// | generic_preamble_for_action generic_verb_for_search generic_article
+// REMOVE 'get', generic_article for statement
 search_command : Ast.Expression = {
     (
           table:complete_get_command
-        | 'get' generic_article table:with_filtered_table
+        | generic_article table:with_filtered_table
+        | table:with_filtered_table
         | generic_preamble_for_answer generic_article table:with_filtered_table
-        | generic_verb_for_search generic_article table:with_filtered_table
-        | generic_preamble_for_action generic_verb_for_search generic_article table:with_filtered_table
+        | generic_preamble_for_answer table:with_filtered_table
     ) => table;
-    ( 'please' | '') ('list' | 'enumerate') table:with_filtered_table with { is_list = true } => table;
+    // remove ( 'please' | '') ('list' | 'enumerate')
+    table:with_filtered_table with { is_list = true } => table;
 
+    // remove for statement
     // now => get join get => notify
-    ( generic_preamble_for_answer generic_article table:with_filtered_table
-    | generic_verb_for_search generic_article table:with_filtered_table
-    | generic_preamble_for_action generic_verb_for_search generic_article table:with_filtered_table
-    ) => table;
+    // ( generic_preamble_for_answer generic_article table:with_filtered_table
+    // | generic_verb_for_search generic_article table:with_filtered_table
+    // | generic_preamble_for_action generic_verb_for_search generic_article table:with_filtered_table
+    // ) => table;
 
+    // remove for statement
     // now => get => notify (argmin, argmax)
-    ( generic_preamble_for_answer 'the' table:with_arg_min_max_table
-    | generic_verb_for_search 'the' table:with_arg_min_max_table
-    ) => table;
+    // ( generic_preamble_for_answer 'the' table:with_arg_min_max_table
+    // | generic_verb_for_search 'the' table:with_arg_min_max_table
+    // ) => table;
 
     // now => get => say(...)
     (

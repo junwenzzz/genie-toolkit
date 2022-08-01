@@ -273,10 +273,12 @@ $agent : S.AgentReplyRecord = {
  * This non-terminal contains a single user turn in its entirety.
  */
 $user : Ast.DialogueState = {
-    ctx:ctx_init greeting [weight=0.01, expandchoice=false]
-        => S.makeSimpleState(ctx, 'greet', null);
-    ( ctx:ctx_init stmt:initial_command [weight=0.5]
-    | ctx:ctx_init greeting stmt:initial_command [weight=0.5]
+    // remove greeting for statement
+    // ctx:ctx_init greeting [weight=0.01, expandchoice=false]
+    //    => S.makeSimpleState(ctx, 'greet', null);
+    
+    // remove | ctx:ctx_init greeting stmt:initial_command [weight=0.5]
+    ( ctx:ctx_init stmt:initial_command
     | ctx:ctx_sys_greet stmt:initial_command
     ) => D.startNewRequest($loader, ctx, stmt);
 

@@ -260,10 +260,11 @@ constant_Measure_m : Ast.Value = {
     !inference {
         !turking num:constant_Number 'm' => C.addUnit('m', num);
         num:constant_Number 'meters' => C.addUnit('m', num);
-        num:constant_Number 'km' => C.addUnit('km', num);
-        num:constant_Number 'kilometers' => C.addUnit('km', num);
-        num:constant_Number 'mi' => C.addUnit('mi', num);
-        num:constant_Number 'miles' => C.addUnit('mi', num);
+        // remove for building scale
+        // num:constant_Number 'km' => C.addUnit('km', num);
+        // num:constant_Number 'kilometers' => C.addUnit('km', num);
+        // num:constant_Number 'mi' => C.addUnit('mi', num);
+        // num:constant_Number 'miles' => C.addUnit('mi', num);
         num:constant_Number 'ft' => C.addUnit('ft', num);
         num:constant_Number 'in' => C.addUnit('in', num);
         num:constant_Number 'inches' => C.addUnit('in', num);
@@ -274,8 +275,9 @@ constant_Measure_m : Ast.Value = {
 constant_Measure_m2 : Ast.Value = {
     !inference {
         num:constant_Number 'square meters' => C.addUnit('m2', num);
-        num:constant_Number 'square km' => C.addUnit('km2', num);
-        num:constant_Number 'square kilometers' => C.addUnit('km2', num);
+        // remove for building scale
+        // num:constant_Number 'square km' => C.addUnit('km2', num);
+        // num:constant_Number 'square kilometers' => C.addUnit('km2', num);
         num:constant_Number 'square ft' => C.addUnit('ft2', num);
         num:constant_Number 'square feet' => C.addUnit('ft2', num);
     }
