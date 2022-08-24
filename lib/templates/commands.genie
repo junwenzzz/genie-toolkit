@@ -222,6 +222,7 @@ generic_article : string = {
     'any';
     'all the';
     'every';
+    "most";
 }
 
 generic_describe_preamble: string = {
