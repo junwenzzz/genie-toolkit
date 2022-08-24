@@ -522,3 +522,7 @@ within_filter : ({ distance : Ast.Value, place : Ast.Value }) = {
     'within' distance:constant_Measure_m ('' | 'radius') ('of' | 'from') place:constant_Location
         => ({ distance, place });
 }
+
+quantity_filter : C.DomainIndependentFilterSlot = {
+    x:constant_Numeric => C.makeDomainIndependentFilter('number_space', '==', x);
+}
